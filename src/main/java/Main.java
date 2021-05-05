@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,6 +12,9 @@ public class Main {
 	private static Scanner scanner = new Scanner(System.in);
 
 	public static int INVALID_INPUT = -1;
+
+	public Main() throws IOException {
+	}
 
 	/**
 	 * Read one integer. If given input cannot be converted to integer,
@@ -27,10 +33,18 @@ public class Main {
 		return result;
 	}
 
-	private ArrayList<Integer> createResultArrayList(Integer result){
-		ArrayList<Integer> resultArrayList = new ArrayList<>();
-resultArrayList.add(result);
-		return resultArrayList;
+	private static ArrayList<Integer> multiValuesReader() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String lines = br.readLine();
+
+		String[] strs = lines.trim().split("\\s+");
+		ArrayList<Integer> values = new ArrayList<>();
+
+		for (int i = 0; i < strs.length; i++) {
+			Integer a = Integer.parseInt(strs[i]);
+			values.add(a);
+		}
+		return values;
 	}
 
 	/**
@@ -50,13 +64,14 @@ resultArrayList.add(result);
 	 * Read integers from input and print them until negative
 	 * input.
 	 */
-	public static void readIntsFromInputAndPrintItUntilNegative() {
-
-		// *** Zde zapište svůj kód ***
-
-
-
-
+	public static void readIntsFromInputAndPrintItUntilNegative(ArrayList<Integer> inputs) throws IOException {
+//		with if
+		for (Integer input : inputs) {
+			if (input != null && input >= 0) {
+				System.out.println(input);
+			} else return;
+		}
+//		TODO: with do while loop
 	}
 
 	/**
@@ -64,10 +79,15 @@ resultArrayList.add(result);
 	 *
 	 * @return Sum of input numbers.
 	 */
-	public static int sumAllInputUntilNegative() {
-		// *** Zde zapište svůj kód ***
-
-		return 0;
+	public static Integer sumAllInputUntilNegative(ArrayList<Integer> list) {
+		int finalValue = 0;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i) >= 0) {
+				int value = list.get(i);
+				finalValue += value;
+			} else return finalValue;
+		}
+		return finalValue;
 	}
 
 	/**
@@ -75,11 +95,12 @@ resultArrayList.add(result);
 	 *
 	 * @return ArrayList of read values (terminating negative value is included)
 	 */
-	public static ArrayList storeAllInputInArrayListUntilNegative() {
-
-		// *** Zde zapište svůj kód ***
-		return null;
-
+	public static void storeAllInputInArrayListUntilNegative(ArrayList<Integer> list) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i) >= 0) {
+				System.out.println(list.get(i));
+			} else return;
+		}
 	}
 
 	/**
@@ -87,37 +108,43 @@ resultArrayList.add(result);
 	 *
 	 * @param list List of integers to print.
 	 */
-	public static void printAllIntegersFromList(ArrayList<Integer> list) {
-		// *** Zde zapište svůj kód ***
-
-
+	private static void printAllIntegersFromList(ArrayList<Integer> list) {
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
+		}
 	}
 
 	public static Integer sumAllIntegersFromList(ArrayList<Integer> list) {
-		// *** Zde zapište svůj kód ***
-		return null;
+		int finalValue = 0;
+		for (int i = 0; i < list.size(); i++) {
+			int value = list.get(i);
+			finalValue += value;
+		}
+		return finalValue;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		System.out.println("Insert numbers: ");
+		ArrayList<Integer> inputs = multiValuesReader();
+
 		// Example
 		System.out.println("--- Example - read and print one number ---");
-		readOneIntFromInputAndPrintIt();
+//		readOneIntFromInputAndPrintIt();
 		// ---
 		System.out.println("--- Task 1 - read and print until negative ---");
-		readIntsFromInputAndPrintItUntilNegative();
+		readIntsFromInputAndPrintItUntilNegative(inputs);
 		// ---
 		System.out.println("--- Task 2 - sum all until negative ---");
-		System.out.println("Celkový součet je: " + sumAllInputUntilNegative());
+		System.out.println("Celkový součet je: " + sumAllInputUntilNegative(inputs));
 		;
 		// ---
 		System.out.println("--- Task 3 - read to list until negative ---");
-		ArrayList<Integer> list = storeAllInputInArrayListUntilNegative();
-		System.out.println(list);
+		storeAllInputInArrayListUntilNegative(inputs);
 		// ---
 		System.out.println("--- Task 4 - print all from list ---");
-		printAllIntegersFromList(list);
+		printAllIntegersFromList(inputs);
 		// ---
 		System.out.println("--- Task 5 - sum all from list ---");
-		System.out.println("Celkový součet je: " + sumAllIntegersFromList(list));
+		System.out.println("Celkový součet je: " + sumAllIntegersFromList(inputs));
 	}
 }
